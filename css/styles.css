@@ -1,0 +1,128 @@
+/* BASE STYLES
+=========================================================== */
+html {
+  box-sizing: border-box;
+
+  /* font setup */
+  font-family: "Roboto Mono", sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: subpixel-antialiased; /* for a bolder smoother font */
+  text-rendering: optimizeLegibility; /* for more detailed font ligatures */
+}
+
+*,
+*:before,
+*:after { box-sizing: inherit }
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* text selection */
+::-moz-selection { background-color: rgba(155, 155, 155, 0.285) }
+::selection { background-color: rgba(155, 155, 155, 0.285) }
+
+/* normalize elements */
+textarea {
+  overflow: auto;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+menu { display: block }
+
+
+
+/* CUSTOM STYLES
+=========================================================== */
+.writer {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  resize: none;
+  padding: 8.5% 3%;
+  font-size: .82em;
+  line-height: 1.5;
+  background-color: #F0EFED;
+}
+
+.dark .writer {
+  background-color: #2E2D29;
+  color: #fff;
+}
+
+/*.caret {
+  display: inline-block;
+  background: #00B9FF;
+  height: 1.3rem;
+  width: .15rem;
+  position: absolute;
+  left: 15%;
+  top: 15%;
+}*/
+
+
+
+/* UTILITY
+=========================================================== */
+.hide-icon-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.remove { display: none !important }
+
+
+
+/* MEDIA QUERIES
+=========================================================== */
+@media screen and (min-width: 500px) { html { font-size: 123% } }
+@media screen and (min-width: 700px) {
+
+  .writer {
+    padding: 7% 18% 18.5%;
+    padding: calc(7% + .9em) calc(50% - 18.3em);
+  }
+
+}
+@media screen and (min-width: 1000px) { html { font-size: 141% } }
+@media screen and (min-width: 1200px) {
+
+  .writer {
+    padding: 7% 25% 18.5%;
+    padding: calc(7% + .9em) calc(50% - 20em);
+  }
+
+}
+@media print {
+
+  .menu,
+  .caret { display: none !important }
+
+  html,
+  body,
+  html > body > .writer {
+    font-size: 11pt;
+    background: transparent !important;
+    color: #000 !important;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+}
