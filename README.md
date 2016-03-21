@@ -22,9 +22,17 @@ This will be monetized in some way, so be warned if you decide to participate.
 Letter Focus and its materials, code, documentation, artwork, and intellectual property herein are all (c) 2016 John Chin-Jew. All rights reserved.
 
 
-## Todo
+## To Do
 - hack cursor in
 - menu: hidden by css, only appears on js scroll
 - host and buy domain
+- FIX: firefox padding top and bottom is weiiiird
+
+
+## To Test
 - offline capabilities
-- web app capabilities
+- web app capabilities (add to homescreen)
+
+
+## To Do Later
+- Add info page to [personal site](http://johnchinjew.com/projects/letterfocus)

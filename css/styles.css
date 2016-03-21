@@ -37,6 +37,7 @@ a {
 
 /* normalize elements */
 textarea {
+  display: block;
   overflow: auto;
   color: inherit;
   font: inherit;
@@ -50,7 +51,6 @@ menu { display: block }
 /* CUSTOM STYLES
 =========================================================== */
 .writer {
-  display: block;
   height: 100%;
   width: 100%;
   border: 0;
@@ -102,8 +102,8 @@ menu { display: block }
   }
 
 }
-@media screen and (min-width: 1000px) { html { font-size: 141% } }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1150px) { html { font-size: 141% } }
+@media screen and (min-width: 1270px) {
 
   .writer {
     padding: 7% 25% 18.5%;
