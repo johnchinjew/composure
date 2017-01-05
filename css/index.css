@@ -2,20 +2,20 @@ html { box-sizing: border-box }
 *, *:before, *:after { box-sizing: inherit }
 
 body {
-  font-family: "Space Mono", "Roboto Mono", monospace;
+  font-family: "Space Mono", "Lucida Console", "Monaco", "Courier", monospace;
   line-height: 2.1;
   -webkit-font-smoothing: subpixel-antialiased;
   text-rendering: optimizeLegibility;
 }
 
 .day {
-  background-color: #f5f5f5;
+  background-color: #f4f4f3;
   color: transparent;
   text-shadow: 0 0 0 #272727;
 }
 
 .night {
-  background-color: #212121;
+  background-color: #232322;
   color: transparent;
   text-shadow: 0 0 0 #e3e3e3;
 }
@@ -27,8 +27,15 @@ body {
   opacity: .43;
 }
 
-::selection      { background: rgba(0,136,255,.5) }
-::-moz-selection { background: rgba(0,136,255,.5) }
+::selection      { background: rgba(0,117,255,.53) }
+::-moz-selection { background: rgba(0,117,255,.53) }
+
+#caret {
+  background: #00a0ff;
+  position: fixed;
+  height: 1.7em;
+  width: 3px;
+}
 
 #editor {
   position: relative;
@@ -37,26 +44,44 @@ body {
   white-space: pre-wrap;
   word-wrap: break-word;
   margin: 0 auto;
-  letter-spacing: .06rem;
-  min-height: 100%;
-  min-height: 100vh;
-  max-width: 48rem;
-  max-width: calc(40rem + 9vw);
-  padding: 4rem 1rem;
-  padding: 10.3vmin 4vmin;
+  letter-spacing: .06em;
+
+  /* mobile first */
+  padding: 2.2rem .75rem;
+} #editor, #caret {
+  font-size: .9rem;
 }
 
-@media (max-width: 600px) {
+/* tablets */
+@media (min-width: 500px) {
   #editor {
-    padding: 2.75rem .75rem;
+    max-width: 41.5rem;
+    padding: 3rem 1rem;
   }
 }
 
-#caret {
-  background: #08f;
-  position: fixed;
-  height: 1.5rem;
-  width: 3px;
+/* mini desks */
+@media (min-width: 870px) {
+  #editor,
+  #caret {
+    font-size: .95rem;
+  }
+  #editor {
+    max-width: 46rem;
+    padding: 3.8rem 1.18rem;
+  }
+}
+
+/* desktops */
+@media (min-width: 1120px) {
+  #editor,
+  #caret {
+    font-size: 1.02rem;
+  }
+  #editor {
+    max-width: 50rem;
+    padding: 4.3rem 1.5rem;
+  }
 }
 
 @media print {
