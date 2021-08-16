@@ -1,3 +1,4 @@
+const KEYCODE_TAB = 9
 const STORAGE_KEY = "composure_text"
 
 //
@@ -7,7 +8,8 @@ const STORAGE_KEY = "composure_text"
 const $editor = document.querySelector("#editor")
 
 window.addEventListener("load", onLoad)
-$editor.addEventListener("keydown", onKeydown)
+// FIXME: Inserting tab will clear the users undo stack
+// $editor.addEventListener("keydown", onKeydown)
 $editor.addEventListener("input", onInput)
 
 function onLoad(event) {
@@ -17,6 +19,8 @@ function onLoad(event) {
 
 function onKeydown(event) {
     insertTab($editor, event)
+    save($editor, window.localStorage)
+    autoScroll($editor)
 }
 
 function onInput(event) {
@@ -38,10 +42,10 @@ function save(elem, storage) {
 }
 
 function insertTab(elem, event) {
-    if (event.keyCode === 9) {
+    if (event.keyCode === KEYCODE_TAB) {
         event.preventDefault()
         insertAtCaret(elem, '\t')
-	}
+    }
 }
 
 function resetCaret(elem) {
@@ -60,8 +64,9 @@ function autoScroll(elem) {
 //
 
 function insertAtCaret(elem, text) {
-    elem.value = elem.value.slice(0, elem.selectionStart) + text + elem.value.slice(elem.selectionEnd)
-    elem.selectionStart = elem.selectionEnd = elem.selectionStart + text.length
+    const selectionStart = elem.selectionStart
+    elem.value = elem.value.slice(0, selectionStart) + text + elem.value.slice(elem.selectionEnd)
+    elem.selectionStart = elem.selectionEnd = selectionStart + text.length
 }
 
 function scrollToEnd(elem) {
