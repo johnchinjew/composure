@@ -1,0 +1,34 @@
+body {
+  background-color: #FAFBFB;
+  color: #282A2E;
+  margin: 0;
+}
+
+#editor {
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  color: inherit;
+  display: block;
+  font-family: "Courier Prime", monospace;
+  font-size: 16px;
+  height: 100vh;
+  line-height: 1.65;
+  outline: none;
+  padding: 24px calc(0.5 * (100vw - 866px));
+  resize: none;
+  width: 100%;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  body {
+    background-color: #282A2E;
+    color: #FAFBFB;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  #editor {
+    padding: 24px 12px;
+  }
+}
