@@ -4,12 +4,27 @@ const STORAGE_KEY = "composure_text";
 const $editor = document.querySelector("#editor");
 
 window.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+window.addEventListener("storage", onStorage);
 $editor.addEventListener("keydown", onKeydown);
 $editor.addEventListener("input", onInput);
 
 function onDOMContentLoaded(event) {
   loadText($editor, window.localStorage);
   resetCaret($editor);
+}
+
+function onStorage(event) {
+  if (event.storageArea !== window.localStorage || (event.key !== STORAGE_KEY && event.key !== null)) {
+    return;
+  }
+
+  const start = $editor.selectionStart;
+  const end = $editor.selectionEnd;
+  const direction = $editor.selectionDirection;
+  const scrollTop = $editor.scrollTop;
+  loadText($editor, window.localStorage);
+  $editor.setSelectionRange(start, end, direction);
+  $editor.scrollTop = scrollTop;
 }
 
 function onKeydown(event) {
