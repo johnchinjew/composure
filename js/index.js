@@ -14,7 +14,6 @@ function onDOMContentLoaded(event) {
 
 function onKeydown(event) {
   insertTab($editor, event)
-  saveText($editor, window.localStorage)
   autoScroll($editor)
 }
 
@@ -35,6 +34,7 @@ function insertTab(elem, event) {
   if (event.keyCode === KEYCODE_TAB) {
     event.preventDefault()
     document.execCommand('insertText', false, '\t');
+    saveText(elem, window.localStorage)
   }
 }
 
