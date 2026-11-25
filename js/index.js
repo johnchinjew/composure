@@ -3,23 +3,36 @@ const STORAGE_KEY = "composure_text";
 
 const $editor = document.querySelector("#editor");
 
+let hasUnsavedChanges = false;
+let lastStorageError = null;
+
 window.addEventListener("DOMContentLoaded", onDOMContentLoaded);
 window.addEventListener("storage", onStorage);
 $editor.addEventListener("keydown", onKeydown);
 $editor.addEventListener("input", onInput);
 
 function onDOMContentLoaded(event) {
-  loadText($editor, window.localStorage);
-  resetCaret($editor);
+  loadText();
 }
 
 function onStorage(event) {
-  if (event.storageArea !== window.localStorage || (event.key !== STORAGE_KEY && event.key !== null)) {
+  if ($editor.readOnly || hasUnsavedChanges || (event.key !== STORAGE_KEY && event.key !== null)) {
     return;
   }
 
+  let incoming;
+  try {
+    if (event.storageArea !== window.localStorage) {
+      return;
+    }
+    incoming = window.localStorage.getItem(STORAGE_KEY) || "";
+  } catch {
+    showStorageError("Couldn’t load changes from another tab. Copy any text you want to keep before reloading.");
+    return;
+  }
+
+  lastStorageError = null;
   const previous = $editor.value;
-  const incoming = window.localStorage.getItem(STORAGE_KEY) || "";
 
   if (previous == incoming) {
     return;
@@ -59,29 +72,67 @@ function adjustOffset(offset, previous, incoming) {
 }
 
 function onKeydown(event) {
-  insertTab($editor, event);
+  if ($editor.readOnly) {
+    return;
+  }
+  insertTab(event);
   autoScroll($editor);
 }
 
 function onInput(event) {
-  saveText($editor, window.localStorage);
+  saveText();
   autoScroll($editor);
 }
 
-function loadText(elem, storage) {
-  elem.value = storage.getItem(STORAGE_KEY) || "";
+function loadText() {
+  try {
+    $editor.value = window.localStorage.getItem(STORAGE_KEY) || "";
+  } catch {
+    showStorageError("Couldn’t load your saved note. Editing is paused to protect it. Reload to try again.");
+    return;
+  }
+
+  $editor.readOnly = false;
+  resetCaret($editor);
 }
 
-function saveText(elem, storage) {
-  storage.setItem(STORAGE_KEY, elem.value);
+function saveText() {
+  if ($editor.readOnly) {
+    return;
+  }
+
+  hasUnsavedChanges = true;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, $editor.value);
+  } catch {
+    window.addEventListener("beforeunload", onBeforeUnload);
+    showStorageError("Couldn’t save your changes. Copy your text somewhere safe before closing or reloading. Further edits will retry saving.");
+    return;
+  }
+
+  hasUnsavedChanges = false;
+  window.removeEventListener("beforeunload", onBeforeUnload);
+  lastStorageError = null;
 }
 
-function insertTab(elem, event) {
+function showStorageError(message) {
+  if (lastStorageError !== message) {
+    lastStorageError = message;
+    window.alert(message);
+  }
+}
+
+function onBeforeUnload(event) {
+  event.preventDefault();
+  event.returnValue = "";
+}
+
+function insertTab(event) {
   if (event.keyCode === KEYCODE_TAB) {
     event.preventDefault();
     // Intentionally use this deprecated API to preserve native undo/redo through keyboard shortcuts and native menus.
     document.execCommand('insertText', false, '\t');
-    saveText(elem, window.localStorage);
+    saveText();
   }
 }
 
